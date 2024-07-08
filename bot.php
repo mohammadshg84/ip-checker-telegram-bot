@@ -22,12 +22,28 @@ $message = $update->message;
 $text = $update->message->text;
 $chat_id = $update->message->chat->id;
 $message_id = $update->message->message_id;
-$from_id = $update->message->from->id;
 
 if ($text == '/start') {
     bot('sendMessage', [
         'chat_id' => $chat_id,
-        'text' => 'Hi, Send ip',
+        'text' => 'سلام، برای دریافت اطلاعات آی‌پی، اون رو برای بات بفرست.',
         'parse_mode' => 'html',
     ]);
+} else {
+    if (filter_var($text, FILTER_VALIDATE_IP)) {
+        $res = file_get_contents("https://ip.wiki/$text/json");
+        bot('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => $res,
+            'parse_mode' => 'html',
+            'reply_to_message_id' => $message_id
+        ]);
+    } else {
+        bot('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => 'لطفن یه آدرس آی‌پی معتبر بفرست.',
+            'parse_mode' => 'html',
+            'reply_to_message_id' => $message_id
+        ]);
+    }
 }
