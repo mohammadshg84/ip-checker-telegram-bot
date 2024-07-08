@@ -27,8 +27,7 @@ if ($text == '/start') {
     bot('sendMessage', [
         'chat_id' => $chat_id,
         'text' => 'سلام، برای دریافت اطلاعات آی‌پی، اون رو برای بات بفرست.',
-        'parse_mode' => 'html',
-        'reply_to_message_id' => $message_id
+        'parse_mode' => 'html'
     ]);
 } else {
     if (filter_var($text, FILTER_VALIDATE_IP)) {
